@@ -1,11 +1,14 @@
 <template>
-  <div class="project">
+	<!-- adds complete class if the complete value is true -->
+  <div class="project" :class="{complete: project.complete}">
     <div class="actions">
       <h3 @click="showDetails = !showDetails">{{ project.title }}</h3>
       <div class="icons">
         <span @click="deleteProject" class="material-icons">delete</span>
-        <span class="material-icons">edit</span>
-        <span class="material-icons tick">done</span>
+				<router-link :to="{ name: 'EditProject', params: { id: project.id}}">
+					<span class="material-icons">edit</span>
+				</router-link>
+        <span @click="toggleComplete" class="material-icons tick">done</span>
       </div>
     </div>
     <div v-if="showDetails" class="details">
@@ -75,5 +78,11 @@ export default {
   }
   .material-icons:hover {
     color: #777;
+  }
+	.project.complete{
+		border-left: 4px solid #00ce89
+	}
+	.project.complete .tick {
+    color: #00ce89;
   }
 </style>
