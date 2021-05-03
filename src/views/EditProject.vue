@@ -4,7 +4,7 @@
     <input type="text" v-model="title" required>
     <label>Details</label>
     <textarea v-model="details" required></textarea>
-    <button>Add Project</button>
+    <button>Update Project</button>
   </form>
 </template>
 
@@ -27,6 +27,23 @@ export default {
 				}
 			)
 			.catch(error => console.log(error.message))
+	},
+	methods: {
+		handleSubmit() {
+			let editData = {
+				title: this.title,
+				details: this.details
+			}
+			fetch(this.uri, {
+				method: 'PATCH', 
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(editData)}
+				)
+				.then(() => {
+					this.$router.push('/')
+				})
+				.catch(error => console.log(error.message))
+		}
 	}
 }
 </script>
